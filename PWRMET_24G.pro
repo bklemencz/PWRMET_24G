@@ -1,4 +1,4 @@
-update=5/17/2017 2:31:59 PM
+update=5/18/2017 7:34:19 PM
 version=1
 last_client=kicad
 [pcbnew]
@@ -61,3 +61,6 @@ LibName29=valves
 LibName30=BK_STM8
 LibName31=BK_Common
 LibName32=C:/Users/t9569bk/Documents/PCB_Libs/KiCad-Library official/kicad-library/library/stm32
+LibName33=E:/Project/KiCad/KICad-Library/BK_Common
+LibName34=E:/Project/KiCad/KICad-Library/BK_LED_Drivers
+LibName35=E:/Project/KiCad/KICad-Library/BK_STM8

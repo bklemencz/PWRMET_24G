@@ -28,15 +28,16 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:BK_STM8
-LIBS:BK_Common
 LIBS:stm32
+LIBS:BK_Common
+LIBS:BK_LED_Drivers
+LIBS:BK_STM8
 LIBS:PWRMET_24G-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 3
+Sheet 3 4
 Title ""
 Date ""
 Rev ""
@@ -398,11 +399,7 @@ Wire Wire Line
 Wire Wire Line
 	7625 5100 7900 5100
 Wire Wire Line
-	8100 5100 8925 5100
-Wire Wire Line
 	8275 5100 8275 5275
-Wire Wire Line
-	8100 4900 8925 4900
 Wire Wire Line
 	8550 4900 8550 5275
 Connection ~ 8275 5100
@@ -433,9 +430,9 @@ F 3 "" H 8550 5600 50  0000 C CNN
 	1    8550 5600
 	1    0    0    -1  
 $EndComp
-Text Label 8775 4900 0    60   ~ 0
+Text Label 8200 4900 0    60   ~ 0
 CF1
-Text Label 8800 5100 0    60   ~ 0
+Text Label 8200 5100 0    60   ~ 0
 CF
 Connection ~ 1650 2800
 Text Label 2075 2800 0    60   ~ 0
@@ -534,13 +531,13 @@ F 3 "" H 7500 2550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	8450 2400 8650 2400
+	8450 2400 9150 2400
 Wire Wire Line
 	8650 2400 8650 2250
 Wire Wire Line
-	8450 2550 8875 2550
+	8450 2550 9150 2550
 Wire Wire Line
-	8450 2700 8650 2700
+	8450 2700 9150 2700
 Wire Wire Line
 	8650 2700 8650 2875
 $Comp
@@ -586,4 +583,23 @@ Text Label 6075 2400 0    60   ~ 0
 Mains_L
 Text Label 6075 2700 0    60   ~ 0
 Mains_N
+Text HLabel 9150 2550 2    60   Input ~ 0
++3.3V
+Text HLabel 9150 2400 2    60   Input ~ 0
++5V
+Text HLabel 9150 2700 2    60   Input ~ 0
+GND
+Connection ~ 8650 2400
+Connection ~ 8875 2550
+Connection ~ 8650 2700
+Text HLabel 8875 4900 2    60   Input ~ 0
+CF1
+Text HLabel 8875 5100 2    60   Input ~ 0
+CF
+Wire Wire Line
+	8100 5100 8875 5100
+Wire Wire Line
+	8100 4900 8875 4900
+Text HLabel 10100 5325 2    60   Input ~ 0
+SEL
 $EndSCHEMATC
