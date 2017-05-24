@@ -1,4 +1,4 @@
-update=5/18/2017 7:34:19 PM
+update=5/24/2017 1:02:40 PM
 version=1
 last_client=kicad
 [pcbnew]
@@ -64,3 +64,4 @@ LibName32=C:/Users/t9569bk/Documents/PCB_Libs/KiCad-Library official/kicad-libra
 LibName33=E:/Project/KiCad/KICad-Library/BK_Common
 LibName34=E:/Project/KiCad/KICad-Library/BK_LED_Drivers
 LibName35=E:/Project/KiCad/KICad-Library/BK_STM8
+LibName36=C:/Users/t9569bk/Documents/PCB_Libs/KICad-Library/BK_Common
