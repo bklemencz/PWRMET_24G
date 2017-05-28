@@ -30,6 +30,8 @@ LIBS:contrib
 LIBS:valves
 LIBS:stm32
 LIBS:BK_Common
+LIBS:BK_LED_Drivers
+LIBS:BK_STM8
 LIBS:PWRMET_24G-cache
 EELAYER 25 0
 EELAYER END
@@ -255,8 +257,6 @@ Text Label 8325 2175 0    60   ~ 0
 USART_TX
 Text Label 8325 2275 0    60   ~ 0
 USART_RX
-Text Label 4375 2875 0    60   ~ 0
-RF_POW
 Text Label 4375 2775 0    60   ~ 0
 485_DE
 Text Label 4375 3075 0    60   ~ 0
@@ -541,7 +541,6 @@ Text Label 9975 4250 0    60   ~ 0
 SYS_SWDIO
 Text Label 9975 4350 0    60   ~ 0
 SYS_SWCLK
-NoConn ~ 4375 2875
 Text HLabel 8825 2775 2    60   Input ~ 0
 PW_CF
 Text HLabel 8825 2875 2    60   Input ~ 0
@@ -560,4 +559,49 @@ Text HLabel 7175 1475 2    60   Input ~ 0
 GND
 Connection ~ 6875 1475
 Connection ~ 6875 1100
+Text Label 4375 2875 0    60   ~ 0
+PLS_OUT
+$Comp
+L R_SMD_0805 R29
+U 1 1 592A4032
+P 3200 2450
+F 0 "R29" H 3230 2470 50  0000 L CNN
+F 1 "1K" H 3230 2410 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805" H 3250 2300 50  0001 C CNN
+F 3 "" H 3200 2450 50  0000 C CNN
+	1    3200 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Led_Small D2
+U 1 1 592A4087
+P 3200 3025
+F 0 "D2" H 3150 3150 50  0000 L CNN
+F 1 "PLS_LED" H 3025 2925 50  0000 L CNN
+F 2 "LEDs:LED_D5.0mm" V 3200 3025 50  0001 C CNN
+F 3 "" V 3200 3025 50  0000 C CNN
+	1    3200 3025
+	0    -1   -1   0   
+$EndComp
+$Comp
+L GND #PWR015
+U 1 1 592A40D3
+P 3200 3550
+F 0 "#PWR015" H 3200 3300 50  0001 C CNN
+F 1 "GND" H 3200 3400 50  0000 C CNN
+F 2 "" H 3200 3550 50  0000 C CNN
+F 3 "" H 3200 3550 50  0000 C CNN
+	1    3200 3550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3200 3125 3200 3550
+Wire Wire Line
+	3200 2925 3200 2550
+Wire Wire Line
+	3200 2350 3200 2200
+Wire Wire Line
+	3200 2200 3550 2200
+Text Label 3200 2200 0    60   ~ 0
+PLS_OUT
 $EndSCHEMATC
