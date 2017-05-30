@@ -579,9 +579,9 @@ Wire Wire Line
 	6550 2400 6075 2400
 Wire Wire Line
 	6550 2700 6075 2700
-Text Label 6075 2700 0    60   ~ 0
-Mains_L
 Text Label 6075 2400 0    60   ~ 0
+Mains_L
+Text Label 6075 2700 0    60   ~ 0
 Mains_N
 Text HLabel 9150 2550 2    60   Output ~ 0
 +3.3V
