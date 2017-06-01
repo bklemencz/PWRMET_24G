@@ -1,5 +1,5 @@
-Drill report for C:\Users\Balazs\Documents\STM32\PWRMET_24G\HW\PWRMET_24G.kicad_pcb
-Created on 5/29/2017 11:09:31 AM
+Drill report for C:\Users\t9569bk\Documents\KiCad\PWRMET_24G\HW\PWRMET_24G.kicad_pcb
+Created on 6/1/2017 2:40:07 PM
 
 Copper Layer Stackup:
     =============================================================
@@ -20,7 +20,7 @@ Drill file 'C:PWRMET_24G.drl' contains
     Total plated holes count 72
 
 
-Not plated through holes are merged with plated holes
+Drill file 'C:PWRMET_24G-NPTH.drl' contains
     unplated through holes:
     =============================================================
 

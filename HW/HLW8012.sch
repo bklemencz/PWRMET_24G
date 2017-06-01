@@ -30,18 +30,16 @@ LIBS:contrib
 LIBS:valves
 LIBS:stm32
 LIBS:BK_Common
-LIBS:BK_LED_Drivers
-LIBS:BK_STM8
 LIBS:PWRMET_24G-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 4
-Title ""
-Date ""
-Rev ""
-Comp ""
+Title "HLW8012 Energy Monitor & 5V 700mA SMPSU"
+Date "2017-06-01"
+Rev "V1.0"
+Comp "BK"
 Comment1 ""
 Comment2 ""
 Comment3 ""
