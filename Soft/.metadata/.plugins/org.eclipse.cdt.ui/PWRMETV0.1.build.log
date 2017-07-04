@@ -1,0 +1,93 @@
+16:40:28 **** Incremental Build of configuration Debug for project PWRMETV0.1 ****
+make all 
+Building file: ../Application/User/eeprom_emul.c
+Invoking: MCU GCC Compiler
+C:\Users\t9569bk\Documents\KiCad\PWRMET_24G\Soft\PWRMETV0.1\SW4STM32\PWRMETV0.1\Debug
+arm-none-eabi-gcc -mcpu=cortex-m0 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F030x6 -I"C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Inc" -I"C:/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.13.2.201705091103/tools/compiler/arm-none-eabi/include" -I"C:/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.13.2.201705091103/tools/compiler/lib/gcc/arm-none-eabi/5.4.1/include" -I"C:/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.13.2.201705091103/tools/compiler/lib/gcc/arm-none-eabi/5.4.1/include-fixed" -I"C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Drivers/STM32F0xx_HAL_Driver/Inc" -I"C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Drivers/STM32F0xx_HAL_Driver/Inc/Legacy" -I"C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Drivers/CMSIS/Device/ST/STM32F0xx/Include" -I"C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Drivers/CMSIS/Include" -I"C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Inc"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Application/User/eeprom_emul.d" -MT"Application/User/eeprom_emul.o" -o "Application/User/eeprom_emul.o" "../Application/User/eeprom_emul.c"
+../Application/User/eeprom_emul.c:31:8: error: unknown type name 'FLASH_Status'
+ static FLASH_Status EE_Format(void);
+        ^
+In file included from ../Application/User/eeprom_emul.c:23:0:
+../Application/User/eeprom_emul.c: In function 'EE_Init':
+C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Inc/eeprom_emul.h:41:68: error: 'PAGE_SIZE' undeclared (first use in this function)
+ #define PAGE1_BASE_ADDRESS      ((uint32_t)(EEPROM_START_ADDRESS + PAGE_SIZE))
+                                                                    ^
+../Application/User/eeprom_emul.c:54:35: note: in expansion of macro 'PAGE1_BASE_ADDRESS'
+   PageStatus1 = (*(__IO uint16_t*)PAGE1_BASE_ADDRESS);
+                                   ^
+C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Inc/eeprom_emul.h:41:68: note: each undeclared identifier is reported only once for each function it appears in
+ #define PAGE1_BASE_ADDRESS      ((uint32_t)(EEPROM_START_ADDRESS + PAGE_SIZE))
+                                                                    ^
+../Application/User/eeprom_emul.c:54:35: note: in expansion of macro 'PAGE1_BASE_ADDRESS'
+   PageStatus1 = (*(__IO uint16_t*)PAGE1_BASE_ADDRESS);
+                                   ^
+../Application/User/eeprom_emul.c:63:23: warning: implicit declaration of function 'FLASH_ErasePage' [-Wimplicit-function-declaration]
+         FlashStatus = FLASH_ErasePage(PAGE0_BASE_ADDRESS);
+                       ^
+../Application/User/eeprom_emul.c:65:28: error: 'FLASH_COMPLETE' undeclared (first use in this function)
+         if (FlashStatus != FLASH_COMPLETE)
+                            ^
+../Application/User/eeprom_emul.c:80:23: warning: implicit declaration of function 'FLASH_ProgramHalfWord' [-Wimplicit-function-declaration]
+         FlashStatus = FLASH_ProgramHalfWord(PAGE1_BASE_ADDRESS, VALID_PAGE);
+                       ^
+../Application/User/eeprom_emul.c: In function 'EE_ReadVariable':
+../Application/User/eeprom_emul.c:274:79: error: 'PAGE_SIZE' undeclared (first use in this function)
+   PageStartAddress = (uint32_t)(EEPROM_START_ADDRESS + (uint32_t)(ValidPage * PAGE_SIZE));
+                                                                               ^
+../Application/User/eeprom_emul.c: At top level:
+../Application/User/eeprom_emul.c:341:8: error: unknown type name 'FLASH_Status'
+ static FLASH_Status EE_Format(void)
+        ^
+../Application/User/eeprom_emul.c: In function 'EE_Format':
+../Application/User/eeprom_emul.c:343:3: error: unknown type name 'FLASH_Status'
+   FLASH_Status FlashStatus = FLASH_COMPLETE;
+   ^
+../Application/User/eeprom_emul.c:343:30: error: 'FLASH_COMPLETE' undeclared (first use in this function)
+   FLASH_Status FlashStatus = FLASH_COMPLETE;
+                              ^
+In file included from ../Application/User/eeprom_emul.c:23:0:
+C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Inc/eeprom_emul.h:41:68: error: 'PAGE_SIZE' undeclared (first use in this function)
+ #define PAGE1_BASE_ADDRESS      ((uint32_t)(EEPROM_START_ADDRESS + PAGE_SIZE))
+                                                                    ^
+../Application/User/eeprom_emul.c:364:33: note: in expansion of macro 'PAGE1_BASE_ADDRESS'
+   FlashStatus = FLASH_ErasePage(PAGE1_BASE_ADDRESS);
+                                 ^
+../Application/User/eeprom_emul.c: In function 'EE_FindValidPage':
+C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Inc/eeprom_emul.h:41:68: error: 'PAGE_SIZE' undeclared (first use in this function)
+ #define PAGE1_BASE_ADDRESS      ((uint32_t)(EEPROM_START_ADDRESS + PAGE_SIZE))
+                                                                    ^
+../Application/User/eeprom_emul.c:387:35: note: in expansion of macro 'PAGE1_BASE_ADDRESS'
+   PageStatus1 = (*(__IO uint16_t*)PAGE1_BASE_ADDRESS);
+                                   ^
+../Application/User/eeprom_emul.c: In function 'EE_VerifyPageFullWriteVariable':
+../Application/User/eeprom_emul.c:453:3: error: unknown type name 'FLASH_Status'
+   FLASH_Status FlashStatus = FLASH_COMPLETE;
+   ^
+../Application/User/eeprom_emul.c:453:30: error: 'FLASH_COMPLETE' undeclared (first use in this function)
+   FLASH_Status FlashStatus = FLASH_COMPLETE;
+                              ^
+../Application/User/eeprom_emul.c:467:70: error: 'PAGE_SIZE' undeclared (first use in this function)
+   Address = (uint32_t)(EEPROM_START_ADDRESS + (uint32_t)(ValidPage * PAGE_SIZE));
+                                                                      ^
+../Application/User/eeprom_emul.c: In function 'EE_PageTransfer':
+../Application/User/eeprom_emul.c:514:3: error: unknown type name 'FLASH_Status'
+   FLASH_Status FlashStatus = FLASH_COMPLETE;
+   ^
+../Application/User/eeprom_emul.c:514:30: error: 'FLASH_COMPLETE' undeclared (first use in this function)
+   FLASH_Status FlashStatus = FLASH_COMPLETE;
+                              ^
+In file included from ../Application/User/eeprom_emul.c:23:0:
+C:/Users/t9569bk/Documents/KiCad/PWRMET_24G/Soft/PWRMETV0.1/Inc/eeprom_emul.h:41:68: error: 'PAGE_SIZE' undeclared (first use in this function)
+ #define PAGE1_BASE_ADDRESS      ((uint32_t)(EEPROM_START_ADDRESS + PAGE_SIZE))
+                                                                    ^
+../Application/User/eeprom_emul.c:528:22: note: in expansion of macro 'PAGE1_BASE_ADDRESS'
+     OldPageAddress = PAGE1_BASE_ADDRESS;
+                      ^
+../Application/User/eeprom_emul.c: In function 'EE_Init':
+../Application/User/eeprom_emul.c:246:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+make: *** [Application/User/eeprom_emul.o] Error 1
+
+16:40:50 Build Finished (took 21s.485ms)
+

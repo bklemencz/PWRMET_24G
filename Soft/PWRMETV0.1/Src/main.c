@@ -40,17 +40,20 @@
 
 /* USER CODE BEGIN Includes */
 #include "nrf24l01.h"
+#include "eeprom_emul.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+#define BRD_ROLE 				0x10  				//0x10 - Power Meter
+#define BRD_ADDRESS				0x01				// Address may save in ee
+
 struct structPackage{			// Size should not exceed 32Bytes
-	uint8_t xAxis;
-	uint8_t yAxis;
-	uint8_t zAxis;
-	uint8_t text[28];
+	uint16_t Current;
+	uint16_t Voltage;
+	uint16_t EffPower;
 } txPackage;
 
 // Transmitter pipe address - Same of one of the pipe of receiver
@@ -70,6 +73,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void NRF24_Init(void);
+void EEProm_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -80,7 +84,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	uint8_t dataPipe[5];
+	uint8_t dataIn[32];
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -96,6 +101,7 @@ int main(void)
   MX_TIM1_Init();
   MX_SPI1_Init();
   MX_USART1_UART_Init();
+  EEProm_Init();
 
   /* USER CODE BEGIN 2 */
   NRF24_Init();
@@ -106,7 +112,18 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-  /* USER CODE END WHILE */
+	  if (NRF24L01_Available(dataPipe))
+	  {
+		  NRF24L01_GetData(dataIn);
+		  if((dataIn[0] == BRD_ROLE) && dataIn[1]==BRD_ADDRESS)
+		  {
+			  if(dataIn[3]==0x05)							//Request Data
+			  {
+				  NRF24L01_Transmit(&txPackage);
+			  }
+		  }
+	  }
+	  /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
 
@@ -171,14 +188,25 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void EEProm_Init(void)
+{
+	FLASH_Unlock();
+	uint16_t result = EE_Init();
+
+}
 void NRF24_Init(void)
 {
+	NRF24L01_Pins.CE.GPIOx = RF_CE_GPIO_Port;
+	NRF24L01_Pins.CE.GPIO_Pin = RF_CE_Pin;
+	NRF24L01_Pins.CSN.GPIOx = GPIOA;
+	NRF24L01_Pins.CSN.GPIO_Pin = GPIO_PIN_4;
 	/* CSN(SS) high = disable SPI */
 	HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_SET );
 	/* CE low = disable TX/RX */
 	HAL_GPIO_WritePin( RF_CE_GPIO_Port, RF_CE_Pin, GPIO_PIN_RESET );
 	NRF24L01_Init( channel, payload, &hspi1, NRF24L01_Pins );
-	NRF24L01_SetRF( NRF24L01_DataRate_1M, NRF24L01_OutputPower_0dBm);
+	NRF24L01_SetRF( NRF24L01_DataRate_250k, NRF24L01_OutputPower_0dBm);
 	/* Enable auto ack */
 	NRF24L01_SetAutoAck(0xFF, 0);			// 0xFF Enable all or if you want enable just pipe 3, insert 3 																									// Have some troble with ack enable... many lost packages
 	/* Enable CRC 2bytes */

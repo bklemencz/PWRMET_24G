@@ -362,7 +362,7 @@ void NRF24L01_StopListening(void);
  * @param  Data: pointer to a buffer where the data should be written
  * @retval None
  */
-uint8_t NRF24L01_Read(void* data);
+uint8_t NRF24L01_Read(uint8_t * data);
 
 /**
  * @brief  Get Static payload size
