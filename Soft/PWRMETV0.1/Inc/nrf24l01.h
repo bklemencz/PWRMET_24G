@@ -144,6 +144,8 @@ void NRF24L01_FlushRx(void);
  *                the configuration information for SPI module.
  * @retval 1
  */
+void NRF24L01_SwitchBank(void);
+
 uint8_t NRF24L01_Init(uint8_t channel, uint8_t payload_size, SPI_HandleTypeDef *hspi, NRF24L01_Pins_t pins );
 
 /**

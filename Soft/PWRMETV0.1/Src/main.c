@@ -38,7 +38,6 @@
 #include "usart.h"
 #include "gpio.h"
 
-
 /* USER CODE BEGIN Includes */
 #include "nrf24l01.h"
 /* USER CODE END Includes */
@@ -53,6 +52,9 @@ struct structPackage{			// Size should not exceed 32Bytes
 	uint8_t zAxis;
 	uint8_t text[28];
 } txPackage;
+
+// Transmitter pipe address - Same of one of the pipe of receiver
+uint8_t pipeOut[] = { 0xE7, 0xE6, 0xE5, 0xE4, 0xE3 };
 
 NRF24L01_Pins_t NRF24L01_Pins;
 uint8_t channel = 80;											// Channel(decimal)
@@ -70,9 +72,6 @@ void Error_Handler(void);
 void NRF24_Init(void);
 /* USER CODE END PFP */
 
-
-// Transmitter pipe address - Same of one of the pipe of receiver
-uint8_t pipeOut[] = { 0xE7, 0xE6, 0xE5, 0xE4, 0xE3 };
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -145,7 +144,7 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
@@ -183,7 +182,7 @@ void NRF24_Init(void)
 	/* Enable auto ack */
 	NRF24L01_SetAutoAck(0xFF, 0);			// 0xFF Enable all or if you want enable just pipe 3, insert 3 																									// Have some troble with ack enable... many lost packages
 	/* Enable CRC 2bytes */
-	NRF24L01_SetCrcLength( NRF24L01_CRC_16 );
+	NRF24L01_SetCrcLength( NRF24L01_CRC_Disable );
 
 	//APAGAR
 	NRF24L01_TestCarrier();

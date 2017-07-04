@@ -284,6 +284,17 @@ void NRF24L01_FlushTx(void)
 	NRF24L01_CSN_HIGH(); 
 }
 
+void NRF24L01_SwitchBank(void)
+{
+	NRF24L01_CSN_LOW();
+	uint8_t aux = NRF24L01_CMD_ACTIVATE;
+	HAL_SPI_Transmit( NRF24L01_Struct.hspi, &aux, 1, NRF24L01_SPI_TIMEOUT );
+	aux = 0x53;
+	HAL_SPI_Transmit( NRF24L01_Struct.hspi, &aux, 1, NRF24L01_SPI_TIMEOUT );
+	NRF24L01_CSN_HIGH();
+
+}
+
 
 uint8_t NRF24L01_Init(uint8_t channel, uint8_t payload_size, SPI_HandleTypeDef *hspi, NRF24L01_Pins_t pins )
 {			
@@ -307,7 +318,7 @@ uint8_t NRF24L01_Init(uint8_t channel, uint8_t payload_size, SPI_HandleTypeDef *
 	NRF24L01_Struct.Channel = !channel; /* Set channel to some different value for TM_NRF24L01_SetChannel() function */
 	NRF24L01_Struct.PayloadSize = payload_size;
 	NRF24L01_Struct.OutPwr = NRF24L01_OutputPower_0dBm;
-	NRF24L01_Struct.DataRate = NRF24L01_DataRate_1M;
+	NRF24L01_Struct.DataRate = NRF24L01_DataRate_250k;
 	NRF24L01_Struct.hspi = hspi;
 	
 	/* Reset nRF24L01+ to power on registers values */
@@ -348,6 +359,10 @@ uint8_t NRF24L01_Init(uint8_t channel, uint8_t payload_size, SPI_HandleTypeDef *
 	/* Initialize CRC 2bytes */
 	NRF24L01_SetCrcLength( NRF24L01_CRC_16 );
 	
+
+
+
+
 	/* Clear FIFOs */
 	NRF24L01_FlushTx();
 	NRF24L01_FlushRx();
@@ -418,7 +433,7 @@ void NRF24L01_SpiInit( SPI_HandleTypeDef *hspi, NRF24L01_Pins_t pins )
 
 void NRF24L01_SoftwareReset(void)
 {
-	uint8_t data[5];
+	uint8_t data[11];
 	
 	NRF24L01_WriteRegister( NRF24L01_REG_CONFIG, 			NRF24L01_REG_DEFAULT_VAL_CONFIG);
 	NRF24L01_WriteRegister( NRF24L01_REG_EN_AA,				NRF24L01_REG_DEFAULT_VAL_EN_AA);
@@ -469,6 +484,51 @@ void NRF24L01_SoftwareReset(void)
 	NRF24L01_WriteRegister(NRF24L01_REG_FIFO_STATUS, 	NRF24L01_REG_DEFAULT_VAL_FIFO_STATUS);
 	NRF24L01_WriteRegister(NRF24L01_REG_DYNPD, 				NRF24L01_REG_DEFAULT_VAL_DYNPD);
 	NRF24L01_WriteRegister(NRF24L01_REG_FEATURE, 			NRF24L01_REG_DEFAULT_VAL_FEATURE);
+
+	NRF24L01_SwitchBank();
+
+	data[0] = 0xE2; data[1] = 0x01; data[2] = 0x4B; data[3] = 0x40;
+	NRF24L01_WriteRegisterMulti(0, data, 4);
+
+	data[0] = 0x00; data[1] = 0x00; data[2] = 0x4B; data[3] = 0xC0;
+	NRF24L01_WriteRegisterMulti(1, data, 4);
+
+	data[0] = 0x02; data[1] = 0x8C; data[2] = 0xFC; data[3] = 0xD0;
+	NRF24L01_WriteRegisterMulti(2, data, 4);
+
+	data[0] = 0x21; data[1] = 0x39; data[2] = 0x00; data[3] = 0x99;
+	NRF24L01_WriteRegisterMulti(3, data, 4);
+
+	//data[0] = 0x1B; data[1] = 0x82; 	// 1MSPS
+	//data[0] = 0xDB; data[1] = 0x82; 	// 2MSPS
+	data[0] = 0xDB; data[1] = 0x8A; 	// 250ksps
+	data[2] = 0x96; data[3] = 0xF9;
+	NRF24L01_WriteRegisterMulti(4, data, 4);
+
+	//data[0] = 0xA6; data[1] = 0x0F; 	// 1MSPS
+	//data[0] = 0xB6; data[1] = 0x0F; 	// 2MSPS
+	data[0] = 0xB6; data[1] = 0x0F; 	// 250ksps
+	data[2] = 0x06; data[3] = 0x24;
+	NRF24L01_WriteRegisterMulti(5, data, 4);
+
+	data[0] = 0x00; data[1] = 0x12;
+	data[2] = 0x73; data[3] = 0x05;
+	NRF24L01_WriteRegisterMulti(0x0C, data, 4);
+
+	data[0] = 0x36; data[1] = 0xB4;
+	data[2] = 0x80; data[3] = 0x00;
+	NRF24L01_WriteRegisterMulti(0x0D, data, 4);
+
+	data[0] = 0x41; data[1] = 0x20;
+	data[2] = 0x08; data[3] = 0x04;
+	data[4] = 0x81; data[5] = 0x20;
+	data[6] = 0xCF; data[7] = 0xF7;
+	data[8] = 0xFE; data[9] = 0xFF;
+	data[10] = 0xFF;
+	NRF24L01_WriteRegisterMulti(0x0E, data, 10);
+
+	NRF24L01_SwitchBank();
+
 }
 
 /**
@@ -621,14 +681,18 @@ void NRF24L01_PowerUpRx(void)
 	NRF24L01_ClearInterrupts();
 	/* Setup RX mode */
 	NRF24L01_WriteRegister(NRF24L01_REG_CONFIG, NRF24L01_CONFIG | 1 << NRF24L01_PWR_UP | 1 << NRF24L01_PRIM_RX );
+	NRF24L01_FlushRx();
 	/* Start listening */
 	NRF24L01_CE_HIGH();
 }
 
 void NRF24L01_PowerUpTx(void)
 {
+	NRF24L01_CE_LOW();
 	NRF24L01_ClearInterrupts();
 	NRF24L01_WriteRegister(NRF24L01_REG_CONFIG, (NRF24L01_ReadRegister( NRF24L01_REG_CONFIG ) & ~(1 << NRF24L01_PRIM_RX)) | NRF24L01_CONFIG | (1 << NRF24L01_PWR_UP));				// PWR_UP = 1, PRIM_RX = 0	
+	NRF24L01_FlushTx();
+	NRF24L01_CE_HIGH();
 }
 
 // REVER - const void

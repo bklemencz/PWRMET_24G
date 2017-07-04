@@ -68,4 +68,5 @@ $RECYCLE.BIN/
 *.msp
 
 # Windows shortcuts
-*.lnk
+
+Soft/PWRMETV0.1/.metadata/
