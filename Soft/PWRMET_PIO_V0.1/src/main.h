@@ -57,16 +57,31 @@
 #define PW_CF1_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
+// Internal voltage reference value
+#define V_REF               2.43
+
+// The factor of a 1mOhm resistor
+// as per recomended circuit in datasheet
+// A 1mOhm resistor allows a ~30A max measurement
+#define R_CURRENT           0.001
+
+// This is the factor of a voltage divider of 5x 470K upstream and 1k downstream
+// as per recomended circuit in datasheet
+#define R_VOLTAGE           2350
+
+// Frequency of the HLW8012 internal clock
+#define F_OSC               3579000
+
 
 /* USER CODE END Private defines */
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-*/ 
+*/
 
 #endif /* __MAIN_H */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

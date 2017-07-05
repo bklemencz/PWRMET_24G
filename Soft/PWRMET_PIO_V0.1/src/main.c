@@ -53,7 +53,7 @@
 struct structPackage{			// Size should not exceed 32Bytes
 	uint16_t Current;
 	uint16_t Voltage;
-	uint16_t EffPower;
+	uint16_t ActPower;
 } txPackage;
 
 // Transmitter pipe address - Same of one of the pipe of receiver
@@ -66,6 +66,15 @@ volatile uint16_t CF_OvrFlw,CF1_OvrFlw;
 volatile uint32_t CF_Val,CF1_Val,CF_Prev,CF1_Prev;
 bool SEL_STATE;
 bool CF1_LstMeas;
+
+long _current_multiplier;
+long _voltage_multiplier;
+long _power_multiplier;
+long _timer_multiplier;
+
+long _current_resistor = R_CURRENT;
+long _voltage_resistor = R_VOLTAGE;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -82,6 +91,8 @@ void Pulse_LED(void);
 void HLW_Update_Power(uint32_t RawValue);
 void HLW_Update_Current(uint32_t RawValue);
 void HLW_Update_Voltage(uint32_t RawValue);
+
+void HLW_calculateDefaultMultipliers();
 
 /* USER CODE END PFP */
 
@@ -114,6 +125,7 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   NRF24_Init();
+	HLW_calculateDefaultMultipliers();
 	HAL_GPIO_WritePin(PW_SEL_GPIO_Port, PW_SEL_Pin, GPIO_PIN_RESET);							// Default 0 - Current Mode
   /* USER CODE END 2 */
 
@@ -211,7 +223,8 @@ void Pulse_LED(void)
 
 void HLW_Update_Power(uint32_t RawValue)
 {
-
+	long SignalWith_Micro = RawValue * _timer_multiplier;
+	txPackage.ActPower = (SignalWith_Micro > 0) ? _power_multiplier / SignalWith_Micro / 2 : 0;
 }
 
 /** Calculate Current Value from Raw Time and store it in the output struct
@@ -219,7 +232,8 @@ void HLW_Update_Power(uint32_t RawValue)
 
 void HLW_Update_Current(uint32_t RawValue)
 {
-
+	long SignalWith_Micro = RawValue * _timer_multiplier;
+	txPackage.Current = (SignalWith_Micro > 0) ? _current_multiplier / SignalWith_Micro / 2 : 0;
 }
 
 /** Calculate Voltage Value from Raw Time and store it in the output struct
@@ -227,7 +241,15 @@ void HLW_Update_Current(uint32_t RawValue)
 
 void HLW_Update_Voltage(uint32_t RawValue)
 {
+	long SignalWith_Micro = RawValue * _timer_multiplier;
+	txPackage.Voltage = (SignalWith_Micro > 0) ? _voltage_multiplier / SignalWith_Micro / 2 : 0;
+}
 
+void HLW_calculateDefaultMultipliers() {
+//_current_multiplier = ( 1000000.0 * 512 * V_REF / _current_resistor / 24.0 / F_OSC );
+//    _voltage_multiplier = ( 1000000.0 * 512 * V_REF * _voltage_resistor / 2.0 / F_OSC );
+//    _power_multiplier = ( 1000000.0 * 128 * V_REF * V_REF * _voltage_resistor / _current_resistor / 48.0 / F_OSC );
+//		_timer_multiplier = 2000000 / 64000;																				//2 sec timeout over period
 }
 
 void NRF24_Init(void)
