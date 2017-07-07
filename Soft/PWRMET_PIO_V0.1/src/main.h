@@ -57,6 +57,9 @@
 #define PW_CF1_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
+
+
+
 // Internal voltage reference value
 #define V_REF               2.43
 

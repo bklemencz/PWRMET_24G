@@ -58,6 +58,7 @@ struct structPackage{			// Size should not exceed 32Bytes
 
 // Transmitter pipe address - Same of one of the pipe of receiver
 uint8_t pipeOut[] = { 0xE7, 0xE6, 0xE5, 0xE4, 0xE3 };
+uint32_t UID_BASE_ADDRESS =  0x1FF80050;
 
 NRF24L01_Pins_t NRF24L01_Pins;
 uint8_t channel = 80;											// Channel(decimal)
@@ -67,13 +68,13 @@ volatile uint32_t CF_Val,CF1_Val,CF_Prev,CF1_Prev;
 bool SEL_STATE;
 bool CF1_LstMeas;
 
-long _current_multiplier;
-long _voltage_multiplier;
-long _power_multiplier;
-long _timer_multiplier;
+uint32_t _current_multiplier;
+uint32_t _voltage_multiplier;
+uint32_t _power_multiplier;
+uint32_t _timer_multiplier;
 
-long _current_resistor = R_CURRENT;
-long _voltage_resistor = R_VOLTAGE;
+uint32_t _current_resistor = R_CURRENT;
+uint32_t _voltage_resistor = R_VOLTAGE;
 
 /* USER CODE END PV */
 
@@ -211,6 +212,11 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
+__STATIC_INLINE uint32_t Get_Uid(void)
+{
+	return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 8U))));
+}
+
 void Pulse_LED(void)
 {
 	HAL_GPIO_WritePin(RF_POW_GPIO_Port, RF_POW_Pin, GPIO_PIN_SET);
@@ -223,8 +229,8 @@ void Pulse_LED(void)
 
 void HLW_Update_Power(uint32_t RawValue)
 {
-	long SignalWith_Micro = RawValue * _timer_multiplier;
-	txPackage.ActPower = (SignalWith_Micro > 0) ? _power_multiplier / SignalWith_Micro / 2 : 0;
+	uint32_t SignalWith_Micro = RawValue * _timer_multiplier;
+	txPackage.ActPower = (SignalWith_Micro > 0) ? _power_multiplier / SignalWith_Micro / 2 * 10: 0;		//this will give Power *10
 }
 
 /** Calculate Current Value from Raw Time and store it in the output struct
@@ -232,8 +238,8 @@ void HLW_Update_Power(uint32_t RawValue)
 
 void HLW_Update_Current(uint32_t RawValue)
 {
-	long SignalWith_Micro = RawValue * _timer_multiplier;
-	txPackage.Current = (SignalWith_Micro > 0) ? _current_multiplier / SignalWith_Micro / 2 : 0;
+	uint32_t SignalWith_Micro = RawValue * _timer_multiplier;
+	txPackage.Current = (SignalWith_Micro > 0) ? _current_multiplier / SignalWith_Micro / 2 : 0;   //this will give Current *10
 }
 
 /** Calculate Voltage Value from Raw Time and store it in the output struct
@@ -241,15 +247,15 @@ void HLW_Update_Current(uint32_t RawValue)
 
 void HLW_Update_Voltage(uint32_t RawValue)
 {
-	long SignalWith_Micro = RawValue * _timer_multiplier;
-	txPackage.Voltage = (SignalWith_Micro > 0) ? _voltage_multiplier / SignalWith_Micro / 2 : 0;
+	uint32_t SignalWith_Micro = RawValue * _timer_multiplier;
+	txPackage.Voltage = (SignalWith_Micro > 0) ? _voltage_multiplier / SignalWith_Micro / 2 : 0;  //this will give Voltage *10
 }
 
 void HLW_calculateDefaultMultipliers() {
-//_current_multiplier = ( 1000000.0 * 512 * V_REF / _current_resistor / 24.0 / F_OSC );
-//    _voltage_multiplier = ( 1000000.0 * 512 * V_REF * _voltage_resistor / 2.0 / F_OSC );
-//    _power_multiplier = ( 1000000.0 * 128 * V_REF * V_REF * _voltage_resistor / _current_resistor / 48.0 / F_OSC );
-//		_timer_multiplier = 2000000 / 64000;																				//2 sec timeout over period
+			_current_multiplier = 1448450;   																					//( 1000000.0 * 512 * V_REF / _current_resistor / 24.0 / F_OSC )*1000;
+    	_voltage_multiplier = 408462700;                                          // ( 1000000.0 * 512 * V_REF * _voltage_resistor / 2.0 / F_OSC ); *1000
+    	_power_multiplier = 1033921207; 																					// ( 1000000.0 * 128 * V_REF * V_REF * _voltage_resistor / _current_resistor / 48.0 / F_OSC );*100
+			_timer_multiplier = 3125; 																								//	2000000 / 64000;	//2 sec timeout over period *100
 }
 
 void NRF24_Init(void)
