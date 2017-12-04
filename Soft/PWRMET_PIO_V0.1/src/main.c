@@ -50,19 +50,19 @@
 #define BRD_ROLE 					0x10  				//0x10 - Power Meter
 #define BRD_ADDRESS				0x01				// Address may save in ee
 
-struct structPackage{			// Size should not exceed 32Bytes
-	uint16_t Current;
-	uint16_t Voltage;
-	uint16_t ActPower;
-} txPackage;
-
+//struct structPackage{			// Size should not exceed 32Bytes
+//	uint16_t Current;
+//	uint16_t Voltage;
+//	uint16_t ActPower;
+//} txPackage;
+uint8_t txPackage[6];
 // Transmitter pipe address - Same of one of the pipe of receiver
-uint8_t pipeOut[] = { 0xE7, 0xE6, 0xE5, 0xE4, 0xE3 };
+uint8_t pipeOut[] = { 0x11, 0x11, 0x11, 0x11, 0x11 };
 uint32_t UID_BASE_ADDRESS =  0x1FF80050;
 
 NRF24L01_Pins_t NRF24L01_Pins;
 uint8_t channel = 80;											// Channel(decimal)
-uint8_t payload = sizeof(txPackage);
+uint8_t payload = 6; //sizeof(txPackage);
 volatile uint16_t CF_OvrFlw,CF1_OvrFlw;
 volatile uint32_t CF_Val,CF1_Val,CF_Prev,CF1_Prev;
 bool SEL_STATE;
@@ -76,6 +76,8 @@ uint32_t _timer_multiplier;
 uint32_t _current_resistor = R_CURRENT;
 uint32_t _voltage_resistor = R_VOLTAGE;
 
+NRF24L01_Transmit_Status_t txstatus;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,6 +90,7 @@ void Error_Handler(void);
 void NRF24_Init(void);
 void EEProm_Init(void);
 void Pulse_LED(void);
+void Start_Timer_IT (void);
 
 void HLW_Update_Power(uint32_t RawValue);
 void HLW_Update_Current(uint32_t RawValue);
@@ -105,8 +108,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	uint8_t dataPipe[5];
-	uint8_t dataIn[32];
+	//uint8_t dataPipe[5];
+	//uint8_t dataIn[32];
+	uint8_t datatosend[5];
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -126,25 +130,47 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   NRF24_Init();
+	//NRF24L01_SetCrcLength(NRF24L01_CRC_16);
 	HLW_calculateDefaultMultipliers();
 	HAL_GPIO_WritePin(PW_SEL_GPIO_Port, PW_SEL_Pin, GPIO_PIN_RESET);							// Default 0 - Current Mode
-  /* USER CODE END 2 */
+	Start_Timer_IT();
+	/* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if (NRF24L01_Available(dataPipe))
-	  {
-		  NRF24L01_GetData(dataIn);
-		  if((dataIn[0] == BRD_ROLE) && dataIn[1]==BRD_ADDRESS)
-		  {
-			  if(dataIn[3]==0x05)							//Request Data
-			  {
-				  NRF24L01_Transmit(&txPackage);
-			  }
-		  }
-	  }
+		//datatosend[0]++;
+		//txstatus = NRF24L01_Transmit(datatosend);
+		//if (txstatus == NRF24L01_Transmit_Status_Ok) {Pulse_LED();}
+		//else if(txstatus == NRF24L01_Transmit_Status_Lost) {Pulse_LED();Pulse_LED();}
+		//else if (txstatus == NRF24L01_Transmit_Status_Sending) {Pulse_LED();Pulse_LED();Pulse_LED();}
+
+		//uint8_t ch = NRF24L01_ReadRegister(0x1D);
+		//for (uint8_t i=0; i<ch;i++) Pulse_LED();
+
+		//if (ch == 1) {Pulse_LED();}
+		//else if (ch==0) {Pulse_LED();Pulse_LED();}
+		//else {Pulse_LED();Pulse_LED();Pulse_LED();}
+
+		//if (HAL_GPIO_ReadPin(RF_IRQ_GPIO_Port, RF_IRQ_Pin)) Pulse_LED();
+
+		HAL_Delay(50);
+		uint8_t reg = NRF24L01_ReadRegister(0);
+		//HAL_UART_Transmit(&huart1, &reg, 1, 500);
+
+		//if (NRF24L01_Available(dataPipe))
+	  //{
+		//  NRF24L01_GetData(dataIn);
+		 // if((dataIn[0] == BRD_ROLE) && dataIn[1]==BRD_ADDRESS)
+		 // {
+			//  if(dataIn[3]==0x05)							//Request Data
+			//  {
+
+					NRF24L01_Transmit(&txPackage);
+			//  }
+		 // }
+	 // }
 	  /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -212,6 +238,13 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
+void Start_Timer_IT (void)
+{
+	HAL_TIM_Base_Start_IT(&htim1);
+	HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_2);
+	HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_3);
+}
+
 __STATIC_INLINE uint32_t Get_Uid(void)
 {
 	return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 8U))));
@@ -220,8 +253,9 @@ __STATIC_INLINE uint32_t Get_Uid(void)
 void Pulse_LED(void)
 {
 	HAL_GPIO_WritePin(RF_POW_GPIO_Port, RF_POW_Pin, GPIO_PIN_SET);
-	HAL_Delay(2);
+	HAL_Delay(10);
 	HAL_GPIO_WritePin(RF_POW_GPIO_Port, RF_POW_Pin, GPIO_PIN_RESET);
+	HAL_Delay(20);
 }
 
 /** Calculate Power Value from Raw Time and store it in the output struct
@@ -230,7 +264,8 @@ void Pulse_LED(void)
 void HLW_Update_Power(uint32_t RawValue)
 {
 	uint32_t SignalWith_Micro = RawValue * _timer_multiplier;
-	txPackage.ActPower = (SignalWith_Micro > 0) ? _power_multiplier / SignalWith_Micro / 2 * 10: 0;		//this will give Power *10
+	uint16_t Pow = (SignalWith_Micro > 0) ? _power_multiplier / SignalWith_Micro / 2 * 10: 0;		//this will give Power *10
+	txPackage[0]=Pow/256; txPackage[1] = Pow % 256;
 }
 
 /** Calculate Current Value from Raw Time and store it in the output struct
@@ -239,7 +274,8 @@ void HLW_Update_Power(uint32_t RawValue)
 void HLW_Update_Current(uint32_t RawValue)
 {
 	uint32_t SignalWith_Micro = RawValue * _timer_multiplier;
-	txPackage.Current = (SignalWith_Micro > 0) ? _current_multiplier / SignalWith_Micro / 2 : 0;   //this will give Current *10
+	uint16_t Cur = (SignalWith_Micro > 0) ? _current_multiplier / SignalWith_Micro / 2 : 0;   //this will give Current *10
+	txPackage[2]=Cur/256; txPackage[3] = Cur % 256;
 }
 
 /** Calculate Voltage Value from Raw Time and store it in the output struct
@@ -248,7 +284,8 @@ void HLW_Update_Current(uint32_t RawValue)
 void HLW_Update_Voltage(uint32_t RawValue)
 {
 	uint32_t SignalWith_Micro = RawValue * _timer_multiplier;
-	txPackage.Voltage = (SignalWith_Micro > 0) ? _voltage_multiplier / SignalWith_Micro / 2 : 0;  //this will give Voltage *10
+	uint16_t Volt = (SignalWith_Micro > 0) ? _voltage_multiplier / SignalWith_Micro / 2 : 0;  //this will give Voltage *10
+	txPackage[4]=Volt/256; txPackage[5] = Volt % 256;
 }
 
 void HLW_calculateDefaultMultipliers() {
@@ -260,29 +297,37 @@ void HLW_calculateDefaultMultipliers() {
 
 void NRF24_Init(void)
 {
+	//HAL_Delay(100);
 	NRF24L01_Pins.CE.GPIOx = RF_CE_GPIO_Port;
 	NRF24L01_Pins.CE.GPIO_Pin = RF_CE_Pin;
-	NRF24L01_Pins.CSN.GPIOx = GPIOA;
-	NRF24L01_Pins.CSN.GPIO_Pin = GPIO_PIN_4;
+	NRF24L01_Pins.CSN.GPIOx = RF_CSN_GPIO_Port;
+	NRF24L01_Pins.CSN.GPIO_Pin = RF_CSN_Pin;
 	/* CSN(SS) high = disable SPI */
-	HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_SET );
+	HAL_GPIO_WritePin( RF_CSN_GPIO_Port,RF_CSN_Pin, GPIO_PIN_SET );
 	/* CE low = disable TX/RX */
 	HAL_GPIO_WritePin( RF_CE_GPIO_Port, RF_CE_Pin, GPIO_PIN_RESET );
+
 	NRF24L01_Init( channel, payload, &hspi1, NRF24L01_Pins );
-	NRF24L01_SetRF( NRF24L01_DataRate_250k, NRF24L01_OutputPower_0dBm);
+	HAL_Delay(10);
+	HAL_GPIO_WritePin( RF_CE_GPIO_Port, RF_CE_Pin, GPIO_PIN_RESET );
+	HAL_GPIO_WritePin( RF_CSN_GPIO_Port,RF_CSN_Pin, GPIO_PIN_SET );
+	NRF24L01_Init( channel, payload, &hspi1, NRF24L01_Pins );
+	//NRF24L01_SetRF( NRF24L01_DataRate_1M, NRF24L01_OutputPower_0dBm);
 	/* Enable auto ack */
-	NRF24L01_SetAutoAck(0xFF, 0);			// 0xFF Disable all or if you want enable just pipe 3, insert 3 																									// Have some troble with ack enable... many lost packages
+	//NRF24L01_SetAutoAck(0xFF, 0);			// 0xFF Disable all or if you want enable just pipe 3, insert 3 																									// Have some troble with ack enable... many lost packages
 	/* Enable CRC 2bytes */
-	NRF24L01_SetCrcLength( NRF24L01_CRC_Disable );
+	//NRF24L01_SetCrcLength(NRF24L01_CRC_16);
 
 	//APAGAR
-	NRF24L01_TestCarrier();
-
+	//NRF24L01_TestCarrier();
+	NRF24L01_WriteRegister(0x1D, 0x01);
 	/* Open a reading pipe with an address*/
-	NRF24L01_OpenReadingPipe(1, pipeOut);
+	NRF24L01_OpenWritingPipe(pipeOut);
+	//NRF24L01_OpenReadingPipe(0, pipeOut);
 	HAL_Delay(1);
-
+	//NRF24L01_PowerUpTx();
 	NRF24L01_StartListening();
+	NRF24L01_CE_LOW();
 	HAL_Delay(1);
 }
 
@@ -292,6 +337,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {
        CF_OvrFlw++; 					// count roll-overs.
 			 CF1_OvrFlw++;
+			 //HAL_GPIO_TogglePin(RF_POW_GPIO_Port,RF_POW_Pin);
 		}
 }
 
@@ -299,9 +345,9 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
 		uint32_t tmp;
 		if(htim == &htim1){
-        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3)
+        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2)
         {
-					tmp = TIM1->CCR3;
+					tmp = TIM1->CCR2;
 					if (CF_OvrFlw>=2)
 					{
 						CF_Val = 0;
@@ -319,9 +365,9 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 					}
 					HLW_Update_Power(CF_Val);
         } else
-        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4)
+        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3)
         {
-					tmp = TIM1->CCR4;
+					tmp = TIM1->CCR3;
 					CF1_LstMeas = SEL_STATE;
 					if (CF1_OvrFlw>=2)
 					{
@@ -362,8 +408,7 @@ void Error_Handler(void)
   while(1)
   {
   }
-  /* USER CODE END Error_Handler */
-}
+  /* USER CODE END Error_Handler */}
 
 #ifdef USE_FULL_ASSERT
 

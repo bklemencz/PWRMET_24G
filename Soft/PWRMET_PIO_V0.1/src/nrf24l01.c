@@ -62,44 +62,44 @@ SOFTWARE.
 #define NRF24L01_REG_FEATURE			0x1D
 
 /* Registers default values */
-#define NRF24L01_REG_DEFAULT_VAL_CONFIG				0x08
-#define NRF24L01_REG_DEFAULT_VAL_EN_AA				0x3F
-#define NRF24L01_REG_DEFAULT_VAL_EN_RXADDR			0x03
+#define NRF24L01_REG_DEFAULT_VAL_CONFIG				0x0F
+#define NRF24L01_REG_DEFAULT_VAL_EN_AA				0x00
+#define NRF24L01_REG_DEFAULT_VAL_EN_RXADDR			0x3F
 #define NRF24L01_REG_DEFAULT_VAL_SETUP_AW			0x03
-#define NRF24L01_REG_DEFAULT_VAL_SETUP_RETR			0x03
-#define NRF24L01_REG_DEFAULT_VAL_RF_CH				0x02
-#define NRF24L01_REG_DEFAULT_VAL_RF_SETUP			0x0E
-#define NRF24L01_REG_DEFAULT_VAL_STATUS				0x0E
+#define NRF24L01_REG_DEFAULT_VAL_SETUP_RETR			0x00
+#define NRF24L01_REG_DEFAULT_VAL_RF_CH				80
+#define NRF24L01_REG_DEFAULT_VAL_RF_SETUP			0x07
+#define NRF24L01_REG_DEFAULT_VAL_STATUS				0x07
 #define NRF24L01_REG_DEFAULT_VAL_OBSERVE_TX			0x00
 #define NRF24L01_REG_DEFAULT_VAL_RPD				0x00
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_0		0xE7
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_1		0xE7
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_2		0xE7
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_3		0xE7
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_4		0xE7
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_0		0xC2
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_1		0xC2
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_2		0xC2
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_3		0xC2
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_4		0xC2
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P2			0xC3
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P3			0xC4
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P4			0xC5
-#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P5			0xC6
-#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_0			0xE7
-#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_1			0xE7
-#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_2			0xE7
-#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_3			0xE7
-#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_4			0xE7
-#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P0			0x00
-#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P1			0x00
-#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P2			0x00
-#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P3			0x00
-#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P4			0x00
-#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P5			0x00
-#define NRF24L01_REG_DEFAULT_VAL_FIFO_STATUS		0x17		//0x11 do codigo original
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_0		0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_1		0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_2		0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_3		0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P0_4		0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_0		0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_1		0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_2		0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_3		0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P1_4		0x12
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P2			0x13
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P3			0x14
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P4			0x15
+#define NRF24L01_REG_DEFAULT_VAL_RX_ADDR_P5			0x16
+#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_0			0x11
+#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_1			0x11
+#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_2			0x11
+#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_3			0x11
+#define NRF24L01_REG_DEFAULT_VAL_TX_ADDR_4			0x11
+#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P0			0x01
+#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P1			0x01
+#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P2			0x01
+#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P3			0x01
+#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P4			0x01
+#define NRF24L01_REG_DEFAULT_VAL_RX_PW_P5			0x01
+#define NRF24L01_REG_DEFAULT_VAL_FIFO_STATUS		0x00		//0x11 do codigo original
 #define NRF24L01_REG_DEFAULT_VAL_DYNPD				0x00
-#define NRF24L01_REG_DEFAULT_VAL_FEATURE			0x00
+#define NRF24L01_REG_DEFAULT_VAL_FEATURE			0x01
 
 /* Commands */
 #define NRF24L01_CMD_R_REGISTER          			0x00
@@ -200,7 +200,7 @@ SOFTWARE.
 #define NRF24L01_250KBPS							2
 
 /* Configuration */
-#define NRF24L01_CONFIG			((1 << NRF24L01_EN_CRC) | (0 << NRF24L01_CRCO))
+#define NRF24L01_CONFIG			((1 << NRF24L01_EN_CRC) | (1 << NRF24L01_CRCO))
 
 #define NRF24L01_TRANSMISSON_OK 			0
 #define NRF24L01_MESSAGE_LOST   			1
@@ -224,7 +224,7 @@ uint8_t NRF24L01_RxFifoEmpty(void);
 void 		NRF24L01_SoftwareReset(void);
 void    NRF24L01_SoftwareReset_RFM75(NRF24L01_DataRate_t DataRate, NRF24L01_OutputPower_t OutPwr);
 void 		NRF24L01_WriteBit(uint8_t reg, uint8_t bit, uint8_t value);
-void 		NRF24L01_WriteRegister( uint8_t reg, uint8_t value );
+//void 		NRF24L01_WriteRegister( uint8_t reg, uint8_t value );
 void 		NRF24L01_WriteRegisterMulti(uint8_t reg, uint8_t *data, uint8_t length);
 
 
@@ -286,10 +286,11 @@ void NRF24L01_FlushTx(void)
 void NRF24L01_SwitchBank(void)
 {
 	NRF24L01_CSN_LOW();
-	uint8_t aux = NRF24L01_CMD_ACTIVATE;
-	HAL_SPI_Transmit( NRF24L01_Struct.hspi, &aux, 1, NRF24L01_SPI_TIMEOUT );
-	aux = 0x53;
-	HAL_SPI_Transmit( NRF24L01_Struct.hspi, &aux, 1, NRF24L01_SPI_TIMEOUT );
+	uint8_t aux[2];
+	aux[0] = NRF24L01_CMD_ACTIVATE;
+	//HAL_SPI_Transmit( NRF24L01_Struct.hspi, &aux, 1, NRF24L01_SPI_TIMEOUT );
+	aux[1] = 0x53;
+	HAL_SPI_Transmit( NRF24L01_Struct.hspi, aux, 2, NRF24L01_SPI_TIMEOUT );
 	NRF24L01_CSN_HIGH();
 
 }
@@ -315,46 +316,51 @@ uint8_t NRF24L01_Init(uint8_t channel, uint8_t payload_size, SPI_HandleTypeDef *
 	NRF24L01_Struct.Channel = !channel; /* Set channel to some different value for TM_NRF24L01_SetChannel() function */
 	NRF24L01_Struct.PayloadSize = payload_size;
 	NRF24L01_Struct.OutPwr = NRF24L01_OutputPower_0dBm;
-	NRF24L01_Struct.DataRate = NRF24L01_DataRate_250k;
+	NRF24L01_Struct.DataRate = NRF24L01_DataRate_1M;
 	NRF24L01_Struct.hspi = hspi;
-
+	NRF24L01_CE_LOW();
 	/* Reset nRF24L01+ to power on registers values */
 	NRF24L01_SoftwareReset();
 
 	/* Set 1500uS timeouts ( minimum for 32 bytes payload in 250KBPS ) */
-	NRF24L01_WriteRegister( NRF24L01_REG_SETUP_RETR, ((4 << NRF24L01_ARD)|(15 << NRF24L01_ARC)) );
+	NRF24L01_WriteRegister( NRF24L01_REG_SETUP_RETR, ((0 << NRF24L01_ARD)|(0 << NRF24L01_ARC)) );
 
 	/* Channel select */
 	NRF24L01_SetChannel(channel);
 
 	/* Set pipeline to the payload size */
-	NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P0, NRF24L01_Struct.PayloadSize);
-	NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P1, NRF24L01_Struct.PayloadSize);
-	NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P2, NRF24L01_Struct.PayloadSize);
-	NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P3, NRF24L01_Struct.PayloadSize);
-	NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P4, NRF24L01_Struct.PayloadSize);
-	NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P5, NRF24L01_Struct.PayloadSize);
+	//NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P0, NRF24L01_Struct.PayloadSize);
+	//NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P1, NRF24L01_Struct.PayloadSize);
+	//NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P2, NRF24L01_Struct.PayloadSize);
+	//NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P3, NRF24L01_Struct.PayloadSize);
+	//NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P4, NRF24L01_Struct.PayloadSize);
+	//NRF24L01_WriteRegister(NRF24L01_REG_RX_PW_P5, NRF24L01_Struct.PayloadSize);
 
 	/* Set RF settings (1mbps, output power) */
-	NRF24L01_SetRF( NRF24L01_Struct.DataRate, NRF24L01_Struct.OutPwr);
-
-	/* Config register */
-	NRF24L01_WriteRegister(NRF24L01_REG_CONFIG, NRF24L01_CONFIG);
+	//NRF24L01_SetRF( NRF24L01_Struct.DataRate, NRF24L01_Struct.OutPwr);
 
 	/* Enable auto-acknowledgment for all pipes */
-	NRF24L01_WriteRegister(NRF24L01_REG_EN_AA, 0x3F);
+	NRF24L01_WriteRegister(NRF24L01_REG_EN_AA, 0x00);
+
+	/* Config register */
+	NRF24L01_WriteRegister(NRF24L01_REG_CONFIG, 0X0F);
+
+	/* Enable auto-acknowledgment for all pipes */
+	//NRF24L01_WriteRegister(NRF24L01_REG_EN_AA, 0x00);
 
 	/* Enable RX addresses */
-	NRF24L01_WriteRegister(NRF24L01_REG_EN_RXADDR, 0x3F);
+	//NRF24L01_WriteRegister(NRF24L01_REG_EN_RXADDR, 0x3F);
 
 	/* Auto retransmit delay: 1000 (4x250) us and Up to 15 retransmit trials */
-	NRF24L01_WriteRegister(NRF24L01_REG_SETUP_RETR, 0x4F);
+	NRF24L01_WriteRegister(NRF24L01_REG_SETUP_RETR, 0x00);
+
+	NRF24L01_WriteRegister(NRF24L01_REG_FEATURE, 0x01);
 
 	/* Dynamic length configurations: No dynamic length */
 	NRF24L01_WriteRegister(NRF24L01_REG_DYNPD, (0 << NRF24L01_DPL_P0) | (0 << NRF24L01_DPL_P1) | (0 << NRF24L01_DPL_P2) | (0 << NRF24L01_DPL_P3) | (0 << NRF24L01_DPL_P4) | (0 << NRF24L01_DPL_P5));
 
 	/* Initialize CRC 2bytes */
-	NRF24L01_SetCrcLength( NRF24L01_CRC_16 );
+	//NRF24L01_SetCrcLength( NRF24L01_CRC_16 );
 
 
 
@@ -369,14 +375,26 @@ uint8_t NRF24L01_Init(uint8_t channel, uint8_t payload_size, SPI_HandleTypeDef *
 
 	/* Go to RX mode */
 	NRF24L01_PowerUpRx();
-
+	NRF24L01_CE_LOW();
 	/* Return OK */
 	return 1;
 }
 
 void NRF24L01_SoftwareReset(void)
 {
+	if (USE_RFM75) NRF24L01_SoftwareReset_RFM75(NRF24L01_Struct.DataRate, NRF24L01_Struct.OutPwr);
+	HAL_Delay(1);
 	uint8_t data[11];
+
+	data[0] = NRF24L01_CMD_ACTIVATE;
+	data[1] = 0x73;
+	NRF24L01_CSN_LOW();
+	HAL_SPI_Transmit(NRF24L01_Struct.hspi, data, 2, NRF24L01_SPI_TIMEOUT);
+	NRF24L01_CSN_HIGH();
+
+	HAL_Delay(1);
+	//NRF24L01_WriteRegister(NRF24L01_REG_FEATURE, 			NRF24L01_REG_DEFAULT_VAL_FEATURE);
+
 
 	NRF24L01_WriteRegister( NRF24L01_REG_CONFIG, 			NRF24L01_REG_DEFAULT_VAL_CONFIG);
 	NRF24L01_WriteRegister( NRF24L01_REG_EN_AA,				NRF24L01_REG_DEFAULT_VAL_EN_AA);
@@ -428,8 +446,27 @@ void NRF24L01_SoftwareReset(void)
 	NRF24L01_WriteRegister(NRF24L01_REG_DYNPD, 				NRF24L01_REG_DEFAULT_VAL_DYNPD);
 	NRF24L01_WriteRegister(NRF24L01_REG_FEATURE, 			NRF24L01_REG_DEFAULT_VAL_FEATURE);
 
-  if (USE_RFM75) NRF24L01_SoftwareReset_RFM75(NRF24L01_Struct.DataRate, NRF24L01_Struct.OutPwr);
 
+
+  //if (USE_RFM75) NRF24L01_SoftwareReset_RFM75(NRF24L01_Struct.DataRate, NRF24L01_Struct.OutPwr);
+	if (USE_RFM75)
+	{
+		NRF24L01_SwitchBank();
+		data[0] = 0xF9 | 0x06;
+		data[1] = 0x96;
+		data[2] = 0x82;
+		data[3] = 0x1B;
+		NRF24L01_WriteRegisterMulti(4, data, 4);
+		HAL_Delay(1);
+		data[0] = 0xF9 & ~0x06;
+		data[1] = 0x96;
+		data[2] = 0x82;
+		data[3] = 0x1B;
+		NRF24L01_WriteRegisterMulti(4, data, 4);
+		HAL_Delay(5);
+		NRF24L01_SwitchBank();
+		NRF24L01_PowerUpRx();
+	}
 
 }
 
@@ -466,12 +503,15 @@ void NRF24L01_SoftwareReset_RFM75(NRF24L01_DataRate_t DataRate, NRF24L01_OutputP
   data[1] = 0x06; data[0] = 0x24;
 	NRF24L01_WriteRegisterMulti(5, data, 4);
 
-	data[0] = 0x00; data[1] = 0x12;
-	data[2] = 0x73; data[3] = 0x05;
+	data[0] = 0x00; data[1] = 0x12;								//dynamic compatible
+	data[2] = 0x73; data[3] = 0x05;								//120us
+	//data[3] = data[3]-0x05;												//for 130us
+	//data[1] = data[1]=0x02;												//for static compatible
 	NRF24L01_WriteRegisterMulti(0x0C, data, 4);
 
 	data[0] = 0x36; data[1] = 0xB4;
 	data[2] = 0x80; data[3] = 0x00;
+
 	NRF24L01_WriteRegisterMulti(0x0D, data, 4);
 
 	data[0] = 0x41; data[1] = 0x20;
@@ -480,7 +520,7 @@ void NRF24L01_SoftwareReset_RFM75(NRF24L01_DataRate_t DataRate, NRF24L01_OutputP
 	data[6] = 0xCF; data[7] = 0xF7;
 	data[8] = 0xFE; data[9] = 0xFF;
 	data[10] = 0xFF;
-	NRF24L01_WriteRegisterMulti(0x0E, data, 10);
+	NRF24L01_WriteRegisterMulti(0x0E, data, 11);
 
 	NRF24L01_SwitchBank();
 
@@ -647,53 +687,58 @@ void NRF24L01_PowerUpTx(void)
 	NRF24L01_ClearInterrupts();
 	NRF24L01_WriteRegister(NRF24L01_REG_CONFIG, (NRF24L01_ReadRegister( NRF24L01_REG_CONFIG ) & ~(1 << NRF24L01_PRIM_RX)) | NRF24L01_CONFIG | (1 << NRF24L01_PWR_UP));				// PWR_UP = 1, PRIM_RX = 0
 	NRF24L01_FlushTx();
-	NRF24L01_CE_HIGH();
+	NRF24L01_FlushRx();
+	//NRF24L01_CE_HIGH();
 }
 
 // REVER - const void
-NRF24L01_Transmit_Status_t NRF24L01_Transmit(const void *data)
+NRF24L01_Transmit_Status_t NRF24L01_Transmit(uint8_t *data)
 {
-	const uint8_t* aux;
-	aux = data;
+	//const uint8_t* aux;
+	//aux = data;
 
 	uint8_t length = NRF24L01_Struct.PayloadSize;
 
 	/* Chip enable put to low, disable it */
 	NRF24L01_CE_LOW();
-
+	//NRF24L01_PowerDown();
+	//HAL_Delay(5);
 	/* Clear TX FIFO from NRF24L01+ */
 	NRF24L01_FlushTx();
-
+	NRF24L01_FlushRx();
+	/* Go to power up tx mode */
+	NRF24L01_PowerUpTx();
+	//NRF24L01_CE_LOW();
+	//HAL_Delay(5);
 	uint8_t txBuffer[length+1];
 
 	/* Send write payload command */
-	txBuffer[0] = NRF24L01_CMD_W_TX_PAYLOAD;
+	txBuffer[0] = NRF24L01_CMD_W_TX_PAYLOAD_NOACK;
 	/* Fill payload with data*/
 	for( int ind = 0 ; ind < length ; ind++ ){				// REVER se precisa iniciar
-		txBuffer[ind+1] = aux[ind];
+		txBuffer[ind+1] = data[ind];
 	}
 
-	/* Go to power up tx mode */
-	NRF24L01_PowerUpTx();
+
 
 	/* Settling time = 150us */
-	HAL_Delay(1);
+	//HAL_Delay(1);
 
 
 	/* Send payload to nRF24L01+ */
 	NRF24L01_CSN_LOW();
-
+ 	//HAL_Delay(2);
 	/* Fill payload with data*/
 	HAL_SPI_Transmit( NRF24L01_Struct.hspi, txBuffer, (length+1), NRF24L01_SPI_TIMEOUT );
 
 	/* Disable SPI */
 	NRF24L01_CSN_HIGH();
-
+  //HAL_Delay(5);
 	/* Send data! */
 	NRF24L01_CE_HIGH();
 	HAL_Delay(1);
 	NRF24L01_CE_LOW();
-
+	HAL_Delay(50);
 	/* From J. Coliz
 
 	At this point we could return from a non-blocking write, an then call the rest after an interrupt.
@@ -705,18 +750,18 @@ NRF24L01_Transmit_Status_t NRF24L01_Transmit(const void *data)
 	*/
 
 	NRF24L01_Transmit_Status_t status = NRF24L01_Transmit_Status_Lost;
-	uint32_t sent_at = HAL_GetTick();
-	const uint32_t timeout = NRF24L01_TX_TIMEOUT;
+	//uint32_t sent_at = HAL_GetTick();
+	//const uint32_t timeout = NRF24L01_TX_TIMEOUT;
 
-	do{
+	//do{
 		status =  NRF24L01_GetTransmissionStatus();
 
-	}while( (HAL_GetTick() - sent_at < timeout) && (status != NRF24L01_Transmit_Status_Ok)  );
+	//}while( (HAL_GetTick() - sent_at < timeout) && (status != NRF24L01_Transmit_Status_Ok)  );
+  if(!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)) status = NRF24L01_Transmit_Status_Ok;
+	//NRF24L01_PowerDown();
 
-	NRF24L01_PowerDown();
-
-	NRF24L01_FlushTx();
-
+	//NRF24L01_FlushTx();
+ NRF24L01_ClearInterrupts();
 
 
 

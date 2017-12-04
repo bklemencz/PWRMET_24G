@@ -207,6 +207,8 @@ void NRF24L01_PowerDown(void);
  * @param  None
  * @retval None
  */
+
+ void NRF24L01_WriteRegister( uint8_t reg, uint8_t value );
 void NRF24L01_PowerUP(void);
 
 /**
@@ -222,7 +224,7 @@ NRF24L01_Transmit_Status_t NRF24L01_GetTransmissionStatus(void);
  *         Maximum length of array can be the same as "payload_size" parameter on initialization
  * @retval This parameter can be a value of @ref NRF24L01_Transmit_Status_t enumeration
  */
-NRF24L01_Transmit_Status_t NRF24L01_Transmit(const void *data);
+NRF24L01_Transmit_Status_t NRF24L01_Transmit(uint8_t *data);
 
 /**
  * @brief  Checks if data is ready to be read from NRF24L01+
@@ -350,7 +352,7 @@ void NRF24L01_OpenReadingPipe( uint8_t number, uint8_t* address );
  * @retval None
  */
 void NRF24L01_StartListening(void);
-
+uint8_t NRF24L01_ReadRegister(uint8_t reg);
 /**
  * @brief  Stop listening for incoming messages -  return to standby-I
  * @note	 Do this before calling write().
